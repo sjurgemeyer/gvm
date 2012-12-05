@@ -1,6 +1,7 @@
 import org.apache.tools.ant.filters.*
 
 apply plugin: 'groovy'
+apply plugin: 'idea'
 
 defaultTasks 'clean', 'prepareScripts', 'prepareServer', 'prepareTemplates', 'assembleArchive', 'test'
 
@@ -17,10 +18,10 @@ dependencies {
     groovy group: 'org.codehaus.groovy', name: 'groovy', version: '2.0.5'
     groovy group: 'org.codehaus.groovy', name: 'groovy-templates', version: '2.0.5'
     testCompile group: 'junit', name: 'junit', version: '4.10'
-    testCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.0.11'
-    testCompile group: 'info.cukes', name: 'cucumber-groovy', version: '1.0.11'
-    testCompile group: 'org.vert-x', name: 'vertx-core', version: '1.2.3.final'
-    testCompile group: 'org.vert-x', name: 'vertx-lang-groovy', version: '1.2.3.final'
+    testCompile group: 'info.cukes', name: 'cucumber-groovy', version: '1.0.14'
+    testCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.0.14'
+    testCompile group: 'org.vert-x', name: 'vertx-core', version: '1.3.0.final'
+    testCompile group: 'org.vert-x', name: 'vertx-lang-groovy', version: '1.3.0.final'
 }
 
 task wrapper(type: Wrapper) {
@@ -47,7 +48,7 @@ task prepareServer(type: Copy){
 	from 'src/main/resources'
 	into 'build/server'
 	include 'server.groovy'
-	filter(ReplaceTokens, tokens: [GVM_VERSION:config.gvmVersion])
+	filter(ReplaceTokens, tokens: [GVM_VERSION:config.gvmVersion, VERTX_VERSION:config.vertxVersion])
 }
 
 task prepareScripts(type: Copy) {
